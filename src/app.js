@@ -1,7 +1,9 @@
 import '@tarojs/async-await'
-import Taro, { Component } from '@tarojs/taro'
+import Taro, {Component} from '@tarojs/taro'
 import Index from './pages/index'
+import {Provider} from '@tarojs/mobx'
 import './app.scss'
+import Counter from './pages/index/store'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -9,11 +11,16 @@ import './app.scss'
 //   require('nerv-devtools')
 // }
 
+const stores = {
+  counter: new Counter()
+}
+
 class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/home/home'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -23,19 +30,25 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+  }
 
-  componentDidShow () {}
+  componentDidShow () {
+  }
 
-  componentDidHide () {}
+  componentDidHide () {
+  }
 
-  componentDidCatchError () {}
+  componentDidCatchError () {
+  }
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
     return (
-      <Index />
+      <Provider store={stores}>
+        <Index />
+      </Provider>
     )
   }
 }

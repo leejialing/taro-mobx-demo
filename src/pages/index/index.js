@@ -1,35 +1,35 @@
 import Taro from '@tarojs/taro'
-import { View, Text, Button } from '@tarojs/components'
-import { useLocalStore,  observer } from '@tarojs/mobx'
-
+import {Button, Text, View} from '@tarojs/components'
+import {inject, observer} from '@tarojs/mobx'
 import './index.scss'
 
-function Index() {
-  const store = useLocalStore(() => ({
-    counter: 0,
-    increment() {
-      store.counter++
-    },
-    decrement() {
-      store.counter--
-    },
-    incrementAsync() {
-      setTimeout(() => store.counter++, 1000)
-    },
-    async asyncInc(){
-      store.counter++
-    }
-  }))
 
-  const { counter, increment, decrement, incrementAsync, asyncInc } = store;
-  return (
-    <View>
-      <Button onClick={increment}>+</Button>
-      <Button onClick={decrement}>-</Button>
-      <Button onClick={asyncInc}>Add Async</Button>
-      <Text>{counter}</Text>
-    </View>
-  )
+@inject('counter') @observer
+export default class Index extends Taro.Component {
+
+  _go = () => {
+    Taro.navigateTo({
+      url: '/pages/home/home'
+    })
+  }
+
+  /**
+   * 写成箭头函数，页面mobx刷新失效
+   */
+  componentWillMount = () => {
+    console.log('componentWillMount')
+  }
+
+  render () {
+    const {counter, increment, decrement, incrementAsync, asyncInc} = this.props.counter
+    return (
+      <View>
+        <Button onClick={increment}>+</Button>
+        <Button onClick={decrement}>-</Button>
+        <Button onClick={asyncInc}>Add Async</Button>
+        <Text>{counter}</Text>
+        <Button onClick={this._go}>go</Button>
+      </View>
+    )
+  }
 }
-
-export default observer(Index)
