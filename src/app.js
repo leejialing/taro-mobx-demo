@@ -4,6 +4,7 @@ import Index from './pages/index'
 import {Provider} from '@tarojs/mobx'
 import './app.scss'
 import Counter from './pages/index/store'
+import Home from './pages/home/home'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -39,7 +40,8 @@ class App extends Component {
   componentDidHide () {
   }
 
-  componentDidCatchError () {
+  componentDidCatchError (e) {
+    console.log('App componentDidCatchError', e)
   }
 
   // 在 App 类中的 render() 函数没有实际作用
